@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BaseUrl = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://url-backend-wj45.vercel.app/",
 });
 console.log(BaseUrl);
 

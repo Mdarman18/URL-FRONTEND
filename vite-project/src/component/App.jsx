@@ -19,7 +19,7 @@ function Home() {
       return;
     }
     try {
-      const Result = await BaseUrl.post("/home", { url: input });
+      const Result = await BaseUrl.post("/api/home", { url: input });
       setUrl(Result.data);
       console.log(Result.data);
     } catch (error) {
@@ -35,7 +35,7 @@ function Home() {
   const HandleRedirect = async () => {
     try {
       if (url && url.id) {
-        const res = await BaseUrl.get(`/${url.id}`, {
+        const res = await BaseUrl.get(`/api/${url.id}`, {
           // redirect: "follow",
         });
 
@@ -113,7 +113,7 @@ function Home() {
                 />
               </div>
               <div className="  text-[1.3rem] cursor-pointer">
-                <Link to={`/detalis/${url.id}`}>
+                <Link to={`/api/detalis/${url.id}`}>
                   <ImStatsDots className="text-black-500 hover:text-blue-800 transition duration-300 transform hover:scale-155" />
                 </Link>
               </div>

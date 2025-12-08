@@ -9,7 +9,7 @@ const New = () => {
   const [data, setData] = useState("");
   useEffect(() => {
     const fetchResponse = async () => {
-      const res = await BaseUrl.get(`/detalis/${shortId}`);
+      const res = await BaseUrl.get(`/api/detalis/${shortId}`);
       setData(res.data);
     };
 
