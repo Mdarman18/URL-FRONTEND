@@ -56,7 +56,7 @@ function Home() {
   };
   const CopyLink = async () => {
     if (url && url.id) {
-      const shortUrl = `https://url-server-ten.vercel.app/${url.id}`;
+      const shortUrl = `https://url-server-ten.vercel.app/api/${url.id}`;
       navigator.clipboard.writeText(shortUrl);
       toast.success("URL Copied!");
     }
