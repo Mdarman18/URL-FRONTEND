@@ -33,20 +33,8 @@ function Home() {
   };
 
   const HandleRedirect = async () => {
-    try {
-      if (url && url.id) {
-        const res = await BaseUrl.get(`/api/${url.id}`, {
-          // redirect: "follow",
-        });
-
-        if (res.data && res.data.redirectUrl) {
-          window.open(res.data.redirectUrl, "_blank");
-        } else {
-          console.log("error is hpping here");
-        }
-      }
-    } catch (error) {
-      console.log(error);
+    if (url && url.id) {
+      window.open(`https://url-server-ten.vercel.app/api/${url.id}`, "_blank");
     }
   };
 
