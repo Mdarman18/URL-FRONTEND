@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
-import { FaArrowRight, FaHeart } from "react-icons/fa";
+import { FaArrowRight, FaHeart, FaMoon, FaSun } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import BaseUrl from "../Axios";
 import { FaCopy } from "react-icons/fa6";
 import { FaExternalLinkAlt, FaShareAlt } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
 import { FaInstagram } from "react-icons/fa6";
+import { IoCloudyNight } from "react-icons/io5";
 
 function Home() {
+  const [theme, setTheme] = useState(false);
   const [input, setInput] = useState("");
   const [url, setUrl] = useState("");
   const HandleSubmit = async (e) => {
@@ -51,13 +53,30 @@ function Home() {
   };
   return (
     <>
-      <div className="min-h-screen bg-purple-200 flex flex-col items-center ">
+      <div
+        className={`min-h-screen  flex flex-col items-center ${
+          theme === true
+            ? "bg-gray-500 text-white-100"
+            : "bg-purple-200 text-black-900"
+        } `}
+      >
         <Toaster position="top-center font-semibold" />
         <h1 className="text-2xl md:text-[2.34rem] font-semibold flex gap-[5px] mt-[20px]">
           URL SHORTNER{" "}
           <FaLink className="mt-[5px] md:mt-[10px] cursor-pointer text-blue-900" />{" "}
         </h1>
-        <div className="h-[200px] gap-[13px] flex flex-col w-full  md:w-[700px] mt-[12px] bg-slate-200 rounded-[12px] p-4">
+
+        <div
+          className={`h-[200px] gap-[13px] flex flex-col w-full  md:w-[700px] mt-[12px]  rounded-[12px] p-4
+            ${
+              theme === true
+                ? "bg-slate-100 text-white-100 shadow-xl shadow-black/50"
+                : "bg-slate-200 text-black-900"
+            }
+            
+            
+            `}
+        >
           <label className="text-[1.43rem]">Paste your long link here</label>
 
           <input
@@ -70,7 +89,13 @@ function Home() {
 
           <button
             onClick={HandleSubmit}
-            className="flex items-center justify-center gap-2 w-[180px] rounded-[17px] h-[50px] bg-blue-600 text-white text-[1.23rem] cursor-pointer"
+            className={`flex items-center justify-center gap-2 w-[180px] rounded-[17px] h-[50px] bg-blue-600 text-white text-[1.23rem] cursor-pointer
+               ${
+                 theme === true
+                   ? "bg-blue-200 text-blue-900 shadow-xl shadow-black/50"
+                   : "bg-blue-600 text-black-900"
+               }
+              `}
           >
             Get your link
             <FaArrowRight />
@@ -114,14 +139,28 @@ function Home() {
             </button>
           </div>
         )}
+        <div className="my-4">
+          <div
+            onClick={() => setTheme(!theme)}
+            className=" text-4xl cursor-pointer"
+          >
+            {theme == true ? <FaSun /> : <IoCloudyNight />}
+          </div>
+        </div>
         <div className="fixed bottom-0 w-full md:w-auto flex justify-center md:justify-end p-4 md:right-5">
-          <h1 className="flex items-center gap-2 md:gap-1 text-sm md:text-base">
+          <h1
+            className={`flex items-center gap-2 md:gap-1 text-sm md:text-base
+              ${theme === true ? " text-white" : " text-black"}
+              `}
+          >
             Web Dev by
             <a
               href="https://www.instagram.com/only_arman18/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 flex  hover:underline hover:scale-105 transition-transform duration-300 "
+              className={`text-blue-500 flex  hover:underline hover:scale-105 transition-transform duration-300 
+                 ${theme === true ? " text-purple-700" : " text-blue-500"}
+                `}
             >
               <FaInstagram className="mt-[5px] ml-[5px]  cursor-pointer hover: text-red-800" />{" "}
               @Only_Arman18
