@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { FaArrowRight, FaHeart, FaMoon, FaSun } from "react-icons/fa";
@@ -14,6 +14,7 @@ function Home() {
   const [theme, setTheme] = useState(false);
   const [input, setInput] = useState("");
   const [url, setUrl] = useState("");
+  const [qr, setQr] = useState("");
   const HandleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) {
@@ -51,6 +52,12 @@ function Home() {
       toast.success("URL Copied!");
     }
   };
+  useEffect(() => {
+    if (!url || !url.id) return;
+
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://url-server-ten.vercel.app/api/${url.id}`;
+    setQr(qrUrl);
+  }, [url]);
   return (
     <>
       <div
@@ -139,7 +146,10 @@ function Home() {
             </button>
           </div>
         )}
+        {/* ------====   Theme or qr img of this  */}
+
         <div className="my-4">
+          {qr && <img src={qr} alt="" />}
           <div
             onClick={() => setTheme(!theme)}
             className=" text-4xl cursor-pointer"
@@ -147,6 +157,7 @@ function Home() {
             {theme == true ? <FaSun /> : <IoCloudyNight />}
           </div>
         </div>
+
         <div className="fixed bottom-0 w-full md:w-auto flex justify-center md:justify-end p-4 md:right-5">
           <h1
             className={`flex items-center gap-2 md:gap-1 text-sm md:text-base
@@ -162,7 +173,7 @@ function Home() {
                  ${theme === true ? " text-purple-700" : " text-blue-500"}
                 `}
             >
-              <FaInstagram className="mt-[5px] ml-[5px]  cursor-pointer hover: text-red-800" />{" "}
+              <FaInstagram className="mt-[5px] ml-[5px]  cursor-pointer hover:text-red-800" />
               @Only_Arman18
             </a>
           </h1>
