@@ -9,6 +9,7 @@ import { FaExternalLinkAlt, FaShareAlt } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
 import { FaInstagram } from "react-icons/fa6";
 import { IoCloudyNight } from "react-icons/io5";
+import Skeleton from "react-loading-skeleton";
 
 function Home() {
   const [theme, setTheme] = useState(false);
@@ -108,7 +109,7 @@ function Home() {
             <FaArrowRight />
           </button>
         </div>
-        {url && (
+        {url ? (
           <div className="  rounded-[10px] mt-[20px] flex flex-col  items-center  bg-slate-500">
             <h2
               onClick={HandleRedirect}
@@ -144,6 +145,18 @@ function Home() {
             >
               Shorten Another Link
             </button>
+          </div>
+        ) : (
+          <div className="w-full max-w-md mx-auto space-y-3 px-4">
+            {/* Link text placeholder */}
+            <Skeleton height={25} width="70%" />
+
+            {/* Button row placeholder */}
+            <Skeleton height={20} width="50%" />
+            <Skeleton height={20} width="50%" />
+
+            {/* Full width block */}
+            <Skeleton height={40} width="100%" />
           </div>
         )}
         {/* ------====   Theme or qr img of this  */}
