@@ -8,16 +8,21 @@ import { FaCopy } from "react-icons/fa6";
 import { FaExternalLinkAlt, FaShareAlt } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
 import { FaInstagram } from "react-icons/fa6";
-import { IoCloudyNight } from "react-icons/io5";
-import Skeleton from "react-loading-skeleton";
+import { IoCloudyNight, IoMoon } from "react-icons/io5";
+import { ClipLoader, PulseLoader } from "react-spinners";
 
 function Home() {
   const [theme, setTheme] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const [url, setUrl] = useState("");
   const [qr, setQr] = useState("");
+  const [phone, setPhone] = useState(false);
+
   const HandleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setPhone(false);
     if (!input.trim()) {
       toast.error("Please Enter a Valid Url", { duration: 1500 });
       return;
@@ -26,12 +31,14 @@ function Home() {
       const Result = await BaseUrl.post("/api/home", { url: input });
       setUrl(Result.data);
       console.log(Result.data);
+      setLoading(false);
     } catch (error) {
       toast.error("Invalid URL format.Example: https://www.example.com", {
         duration: 1500,
       });
       console.log(error);
       setInput("");
+      setLoading(false);
       return;
     }
   };
@@ -45,6 +52,8 @@ function Home() {
   const EmptyText = () => {
     setInput("");
     setUrl("");
+    setPhone(false);
+    setQr("");
   };
   const CopyLink = async () => {
     if (url && url.id) {
@@ -109,8 +118,27 @@ function Home() {
             <FaArrowRight />
           </button>
         </div>
-        {url ? (
-          <div className="  rounded-[10px] mt-[20px] flex flex-col  items-center  bg-slate-500">
+        {/* ------====   Theme or qr img of this  */}
+        <div className="flex justify-center items-center flex-col">
+          <div className="my-2">
+            {loading ? (
+              <PulseLoader size={15} color="blue" />
+            ) : qr ? (
+              <img
+                src={qr}
+                alt=""
+                className="w-[150px] sm:w-[150px] md:w-[200px] object-contain"
+              />
+            ) : null}
+          </div>
+        </div>
+
+        {loading ? (
+          <div className=" flex items-center justify-center w-full max-w-md mx-auto space-y-3 px-4">
+            <ClipLoader size={50} />
+          </div>
+        ) : url ? (
+          <div className="  rounded-[10px]  flex flex-col  items-center  bg-slate-500">
             <h2
               onClick={HandleRedirect}
               className="cursor-pointer pt-[4px] hover:underline text-[1.63rem] text-blue-800 font-bold"
@@ -146,30 +174,7 @@ function Home() {
               Shorten Another Link
             </button>
           </div>
-        ) : (
-          <div className="w-full max-w-md mx-auto space-y-3 px-4">
-            {/* Link text placeholder */}
-            <Skeleton height={25} width="70%" />
-
-            {/* Button row placeholder */}
-            <Skeleton height={20} width="50%" />
-            <Skeleton height={20} width="50%" />
-
-            {/* Full width block */}
-            <Skeleton height={40} width="100%" />
-          </div>
-        )}
-        {/* ------====   Theme or qr img of this  */}
-
-        <div className="my-4">
-          {qr && <img src={qr} alt="" />}
-          <div
-            onClick={() => setTheme(!theme)}
-            className=" text-4xl cursor-pointer"
-          >
-            {theme == true ? <FaSun /> : <IoCloudyNight />}
-          </div>
-        </div>
+        ) : null}
 
         <div className="fixed bottom-0 w-full md:w-auto flex justify-center md:justify-end p-4 md:right-5">
           <h1
@@ -186,11 +191,17 @@ function Home() {
                  ${theme === true ? " text-purple-700" : " text-blue-500"}
                 `}
             >
-              <FaInstagram className="mt-[5px] ml-[5px]  cursor-pointer hover:text-red-800" />
+              <FaInstagram className="mt-[3px] md:mt-[5px] md:ml-[5px]  cursor-pointer hover:text-red-800" />
               @Only_Arman18
             </a>
           </h1>
-          <FaHeart className="pb-[1px] pl-[5px] text-[1.45rem] cursor-pointer text-red-600 hover:text-red-900 hover:scale-125 transition-transform duration-300  " />
+          <FaHeart className="my-2 sm:pl-[5px] text-[1.25rem] cursor-pointer text-red-600 hover:text-red-900 hover:scale-125 transition-transform duration-300  " />
+          <div
+            onClick={() => setTheme(!theme)}
+            className="cursor-pointer my-0.1 mx-1 text-4xl"
+          >
+            {theme ? <FaSun /> : <IoMoon />}
+          </div>
         </div>
       </div>
     </>
