@@ -9,7 +9,8 @@ import { FaExternalLinkAlt, FaShareAlt } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
 import { FaInstagram } from "react-icons/fa6";
 import { IoCloudyNight, IoMoon } from "react-icons/io5";
-import { ClipLoader, PulseLoader } from "react-spinners";
+import ClipLoader from "react-spinners/ClipLoader";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function Home() {
   const [theme, setTheme] = useState(false);
