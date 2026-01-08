@@ -26,6 +26,7 @@ function Home() {
     setPhone(false);
     if (!input.trim()) {
       toast.error("Please Enter a Valid Url", { duration: 1500 });
+      setLoading(false);
       return;
     }
     try {
